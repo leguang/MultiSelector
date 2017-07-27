@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MultiSelector">
+        <attr name="mode">
+            <enum name="scrollable" value="0" />
+            <enum name="fixed" value="1" />
+        </attr>
+        <attr name="nomalColor" format="color" />
+        <attr name="selectedColor" format="color" />
+        <attr name="indicatorColor" format="color" />
+        <attr name="tabVisible" format="boolean" />
+    </declare-styleable>
+</resources>
