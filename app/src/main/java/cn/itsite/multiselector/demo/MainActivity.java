@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import cn.itsite.multiselector.MultiSelectorView;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
-    private LinearLayout llContainer;
     private MultiSelectorDialog dialog;
     private MultiSelectorView multiSelectorView;
     private EditText etLevel;
@@ -56,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        llContainer = (LinearLayout) findViewById(R.id.ll_container);
         etLevel = (EditText) findViewById(R.id.et_level);
         multiSelectorView = (MultiSelectorView) findViewById(R.id.multiSelectorView);
     }
@@ -67,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 .setNomalColor(0xFF000000)
                 .setSelectedColor(0xFFFF0000)
                 .setTitle("设置你的标题")
-                .setTabVisible(false)
+                .setTabVisible(true)
                 .setLevel(Integer.valueOf(etLevel.getText().toString()))
                 .setTabText("选择")
                 .setOnItemClickListener(new MultiSelectorInterface.OnItemClickListener() {

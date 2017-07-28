@@ -54,7 +54,7 @@ public class MultiSelectorDialog extends Dialog {
         }
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
-        params.height = (int) (getContext().getResources().getDisplayMetrics().heightPixels * 0.618F + 0.5F);
+        params.height = (int) (getContext().getResources().getDisplayMetrics().heightPixels * 0.5F);
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
     }
@@ -208,12 +208,12 @@ public class MultiSelectorDialog extends Dialog {
             final MultiSelectorDialog dialog = new MultiSelectorDialog(context);
             View view = LayoutInflater.from(context).inflate(R.layout.dialog_selector, null);
 
-            //初始化Title部分。
+            //init Title.
             TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
             tvTitle.setText(title);
             tvTitle.setTextColor(titleColor);
 
-            //初始化点击取消部分。
+            //set click dismiss dialog.
             ImageView ivCancel = (ImageView) view.findViewById(R.id.iv_cancel);
             ivCancel.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -222,7 +222,7 @@ public class MultiSelectorDialog extends Dialog {
                 }
             });
 
-            //初始化级联View
+            //init MultiSelectorView object.
             MultiSelectorView multiSelectorView = (MultiSelectorView) view.findViewById(R.id.multiSelectorView);
             multiSelectorView.setLevel(level)
                     .setTabText(tabText)
