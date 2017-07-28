@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         multiSelectorView.notifyDataSetChanged(getData(0));
-
                     }
                 }, 1000);
             }
