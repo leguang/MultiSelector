@@ -1,34 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/ll"
+    android:id="@+id/ll_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="cn.itsite.multiselector.demo.MainActivity">
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/bt"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="点击" />
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="级联数："
+            android:textColor="@color/base_black"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_level"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="默认为1"
+            android:textColor="@color/base_black"
+            android:textSize="14sp" />
+    </LinearLayout>
 
 
-    <Button
-        android:id="@+id/bt1"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="点击" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bt_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="show in view" />
+
+
+        <Button
+            android:id="@+id/bt_dialog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="show in dialog" />
+    </LinearLayout>
+
 
     <cn.itsite.multiselector.MultiSelectorView
-        android:id="@+id/msv"
+        android:id="@+id/multiSelectorView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:indicatorColor="#FFFF0000"
+        app:indicatorColor="@color/colorAccent"
+        app:level="3"
         app:mode="scrollable"
-        app:nomalColor="#FF222222"
-        app:selectedColor="#FFFF0000"
-        app:tabText="我的" />
+        app:nomalColor="@color/base_black"
+        app:selectedColor="@color/colorAccent"
+        app:tabText="选择" />
 
 </LinearLayout>

@@ -310,7 +310,6 @@ public class MultiSelectorView extends LinearLayout {
 
         public PagerHolder(int position) {
             this.position = position;
-            KLog.e("option-->" + option);
         }
     }
 }

@@ -1,28 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#E95E5B</color>
-    <color name="colorPrimaryDark">#E95E5B</color>
-    <color name="colorAccent">#E95E5B</color>
-
-    <!-- 常用颜色值 -->
-    <color name="base_color">#E95E5B</color>
-    <color name="base_line">#E7E7E7</color>
-    <color name="base_gray">#F3F5F7</color>
     <color name="base_black">#222222</color>
-    <color name="white">#FFF</color>
-    <color name="black">#000</color>
-    <color name="gray">#999</color>
-    <color name="light_gray">#dfdfdf</color>
-    <color name="red">#F00</color>
-    <color name="gold">#FFD700</color>
-    <color name="yellow">#FFFF00</color>
-    <color name="blue">#FF375BF1</color>
-    <color name="green">#008000</color>
-    <color name="purple">#800080</color>
-    <color name="pink">#FFC0CB</color>
-    <color name="orange">#FFA500</color>
-    <color name="light_blue">#0083FF</color>
-    <color name="transparent">#0000</color>
-    <color name="lightest_gray">#0a000000</color>
-
 </resources>
