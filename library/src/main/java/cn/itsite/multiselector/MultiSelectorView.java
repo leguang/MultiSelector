@@ -65,6 +65,8 @@ public class MultiSelectorView extends LinearLayout {
 
     public MultiSelectorView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setOrientation(VERTICAL);//默认为水平布局，这里我需要垂直布局。
+
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MultiSelector, 0, 0);
         try {
             if (a.hasValue(R.styleable.MultiSelector_nomalColor)) {
