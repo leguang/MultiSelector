@@ -18,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.socks.library.KLog;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -36,6 +34,8 @@ import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 public class MultiSelectorView extends LinearLayout {
     public static final String TAG = MultiSelectorView.class.getSimpleName();
+    public static final int FIRST_POSITION = 0;
+    private CharSequence DEFAULT_TEXT = "请选择";
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private OnItemClickListener mOnItemClickListener;
@@ -43,9 +43,9 @@ public class MultiSelectorView extends LinearLayout {
     private List<PagerHolder> mPagerHolders = new ArrayList<>();
     private VPAdapter pagerAdapter;
     private int mMode;
-    private int selectedColor = 0xFFFF0000;
-    private int nomalColor = 0xFF222222;
-    private int mIndicatorColor = 0xFFFF0000;
+    private int selectedColor;
+    private int nomalColor;
+    private int mIndicatorColor;
     private boolean tabVisible;
     private int level = 1;
 
@@ -68,13 +68,13 @@ public class MultiSelectorView extends LinearLayout {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.MultiSelector, 0, 0);
         try {
             if (a.hasValue(R.styleable.MultiSelector_nomalColor)) {
-                nomalColor = a.getColor(R.styleable.MultiSelector_nomalColor, 0);
+                nomalColor = a.getColor(R.styleable.MultiSelector_nomalColor, 0xFF222222);
             }
             if (a.hasValue(R.styleable.MultiSelector_selectedColor)) {
-                selectedColor = a.getColor(R.styleable.MultiSelector_selectedColor, 0);
+                selectedColor = a.getColor(R.styleable.MultiSelector_selectedColor, 0xFFFF0000);
             }
             if (a.hasValue(R.styleable.MultiSelector_indicatorColor)) {
-                mIndicatorColor = a.getColor(R.styleable.MultiSelector_indicatorColor, 0);
+                mIndicatorColor = a.getColor(R.styleable.MultiSelector_indicatorColor, 0xFFFF0000);
             }
             tabVisible = a.getBoolean(R.styleable.MultiSelector_tabVisible, true);
             mMode = a.getInt(R.styleable.MultiSelector_mode, TabLayout.MODE_FIXED);
@@ -123,9 +123,14 @@ public class MultiSelectorView extends LinearLayout {
         return level;
     }
 
+    public MultiSelectorView setTabText(CharSequence text) {
+        this.DEFAULT_TEXT = text;
+        return this;
+    }
+
     public void notifyDataSetChanged(List<String> date) {
         PagerHolder pagerHolder = mPagerHolders.get(pagerAdapter.getCount() - 1);
-        if (pagerHolder != null) {
+        if (pagerHolder != null && pagerHolder.recyclerView != null) {
             pagerHolder.mData = date;
             pagerHolder.recyclerView.getAdapter().notifyDataSetChanged();
         }
@@ -137,7 +142,7 @@ public class MultiSelectorView extends LinearLayout {
         setTabMode(mMode);
         setTabTextColors(nomalColor, selectedColor);
         setIndicatorColor(mIndicatorColor);
-        mPagerHolders.add(new PagerHolder(0));
+        mPagerHolders.add(new PagerHolder(FIRST_POSITION));
     }
 
     private void initViewPager() {
@@ -185,7 +190,6 @@ public class MultiSelectorView extends LinearLayout {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            KLog.e(TAG, "instantiateItem------------->" + position);
             PagerHolder mPagerHolder = mPagerHolders.get(position);
             if (mPagerHolder.recyclerView == null) {
                 mPagerHolder.recyclerView = new RecyclerView(container.getContext());
@@ -248,7 +252,7 @@ public class MultiSelectorView extends LinearLayout {
                         pagerAdapter.notifyDataSetChanged();
                         mViewPager.setCurrentItem(pagerAdapter.getCount(), true);
                     } else {
-                        List<String> select = new ArrayList<>();
+                        List<CharSequence> select = new ArrayList<>();
                         for (PagerHolder pagerHolder : mPagerHolders) {
                             select.add(pagerHolder.option);
                         }
@@ -274,11 +278,11 @@ public class MultiSelectorView extends LinearLayout {
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int pagerPosition, int optionPosition, String option);
+        void onItemClick(int pagerPosition, int optionPosition, CharSequence option);
     }
 
     public interface OnSelectedListener {
-        void onSelect(List<String> select);
+        void onSelect(List<CharSequence> select);
     }
 
     class BaseViewHolder extends RecyclerView.ViewHolder {
@@ -295,7 +299,7 @@ public class MultiSelectorView extends LinearLayout {
         int optionPosition = -1;
         List<String> mData = new ArrayList<>();
         RecyclerView recyclerView;
-        String option = "请选择";
+        CharSequence option = DEFAULT_TEXT;
 
         public PagerHolder(int position) {
             this.position = position;

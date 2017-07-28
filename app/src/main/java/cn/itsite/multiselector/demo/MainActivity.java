@@ -27,40 +27,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ll = (LinearLayout) findViewById(R.id.ll);
         bt = (Button) findViewById(R.id.bt);
-
         dialog = MultiSelectorDialog.builder(MainActivity.this)
                 .setIndicatorColor(0xFFFF0000)
                 .setNomalColor(0xFF000000)
                 .setSelectedColor(0xFFFF0000)
                 .setTitle("请选择地区")
-                .setLevel(1)
+                .setLevel(3)
                 .setOnItemClickListener(new MultiSelectorView.OnItemClickListener() {
                     @Override
-                    public void onItemClick(int currentPager, int selectedItem, String item) {
-                        KLog.e("currentPager-->" + currentPager);
-                        KLog.e("selectedItem-->" + selectedItem);
-                        KLog.e("item-->" + item);
-
+                    public void onItemClick(int currentPager, int selectedItem, CharSequence item) {
+                        dialog.notifyDataSetChanged(getData(currentPager));
 
                     }
                 })
                 .setOnSelectedListener(new MultiSelectorView.OnSelectedListener() {
                     @Override
-                    public void onSelect(List<String> select) {
-
-                        for (String s : select) {
+                    public void onSelect(List<CharSequence> select) {
+                        dialog.dismiss();
+                        for (CharSequence s : select) {
                             KLog.e(s);
                         }
 
                     }
-                }).build();
-
+                }).show();
 
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.show();
 
+                dialog.notifyDataSetChanged(getData(1));
 
             }
         });
@@ -78,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         msv.setOnItemClickListener(new MultiSelectorView.OnItemClickListener() {
             @Override
-            public void onItemClick(int pagerPosition, int optionPosition, String option) {
+            public void onItemClick(int pagerPosition, int optionPosition, CharSequence option) {
 
                 KLog.e("TAG", "pagerPosition-->" + pagerPosition);
                 KLog.e("TAG", "optionPosition-->" + optionPosition);
