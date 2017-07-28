@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.itsite.multiselector.MultiSelectorDialog;
+import cn.itsite.multiselector.MultiSelectorInterface;
 import cn.itsite.multiselector.MultiSelectorView;
 
 public class MainActivity extends AppCompatActivity {
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 .setTabVisible(false)
                 .setLevel(Integer.valueOf(etLevel.getText().toString()))
                 .setTabText("选择")
-                .setOnItemClickListener(new MultiSelectorView.OnItemClickListener() {
+                .setOnItemClickListener(new MultiSelectorInterface.OnItemClickListener() {
                     @Override
                     public void onItemClick(final int pagerPosition, int optionPosition, CharSequence option) {
                         ToastUtils.showToast(MainActivity.this
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                         }, 1000);
                     }
                 })
-                .setOnSelectedListener(new MultiSelectorView.OnSelectedListener() {
+                .setOnSelectedListener(new MultiSelectorInterface.OnSelectedListener() {
                     @Override
                     public void onSelect(List<CharSequence> select) {
                         dialog.dismiss();
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initListener() {
-        multiSelectorView.setOnItemClickListener(new MultiSelectorView.OnItemClickListener() {
+        multiSelectorView.setOnItemClickListener(new MultiSelectorInterface.OnItemClickListener() {
             @Override
             public void onItemClick(final int pagerPosition, int optionPosition, CharSequence option) {
                 ToastUtils.showToast(MainActivity.this
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 }, 1000);
 
             }
-        }).setOnSelectedListener(new MultiSelectorView.OnSelectedListener() {
+        }).setOnSelectedListener(new MultiSelectorInterface.OnSelectedListener() {
             @Override
             public void onSelect(List<CharSequence> select) {
                 dialog.dismiss();

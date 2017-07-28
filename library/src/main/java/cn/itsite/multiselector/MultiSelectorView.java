@@ -175,6 +175,7 @@ public class MultiSelectorView extends LinearLayout {
 
     /**
      * Notify any registered observers that the data set has changed like {@link RecyclerView}.
+     *
      * @param date show in the RecyclerView.
      */
     public void notifyDataSetChanged(List<String> date) {
@@ -347,6 +348,9 @@ public class MultiSelectorView extends LinearLayout {
         }
     }
 
+    /**
+     * A holder class for every page.
+     */
     private class PagerHolder {
         int position;
         int optionPosition = -1;
@@ -354,8 +358,7 @@ public class MultiSelectorView extends LinearLayout {
         RecyclerView recyclerView;
         CharSequence option = DEFAULT_TEXT;
 
-
-        public PagerHolder(int position) {
+        PagerHolder(int position) {
             this.position = position;
         }
     }
