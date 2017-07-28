@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
                         for (CharSequence s : select) {
                             Log.e(TAG, s.toString());
                         }
+
                     }
                 }).show();
 
