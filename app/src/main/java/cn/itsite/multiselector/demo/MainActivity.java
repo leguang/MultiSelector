@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 .setIndicatorColor(0xFFFF0000)
                 .setNomalColor(0xFF000000)
                 .setSelectedColor(0xFFFF0000)
-                .setTitle("请选择地区")
+                .setTitle("设置你要的标题")
+                .setTabVisible(false)
                 .setLevel(Integer.valueOf(etLevel.getText().toString()))
                 .setTabText("选择")
                 .setOnItemClickListener(new MultiSelectorView.OnItemClickListener() {
@@ -91,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                         for (CharSequence s : select) {
                             Log.e(TAG, s.toString());
                         }
-
                     }
                 }).show();
 
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public List<String> getData(int currentPager) {
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1; i++) {
             list.add("第" + currentPager + "页" + "第" + i + "个");
         }
         return list;

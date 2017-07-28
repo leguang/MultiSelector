@@ -8,10 +8,9 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:orientation="horizontal">
+        android:layout_height="45dp">
 
-        <android.support.v7.widget.AppCompatTextView
+        <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,11 +20,11 @@
 
         <ImageView
             android:id="@+id/iv_cancel"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_gravity="end|center_vertical"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_apply_refuse_200px" />
+            android:src="@drawable/ic_close_black_18dp" />
     </FrameLayout>
 
     <cn.itsite.multiselector.MultiSelectorView

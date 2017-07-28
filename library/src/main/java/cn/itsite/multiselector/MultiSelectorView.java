@@ -18,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.socks.library.KLog;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -131,6 +129,12 @@ public class MultiSelectorView extends LinearLayout {
         this.DEFAULT_TEXT = text;
         mPagerHolders.get(mPagerHolders.size() - 1).option = text;
         pagerAdapter.notifyDataSetChanged();
+        return this;
+    }
+
+    public MultiSelectorView setTabVisible(boolean tabVisible) {
+        this.tabVisible = tabVisible;
+        mTabLayout.setVisibility(tabVisible ? VISIBLE : GONE);
         return this;
     }
 
