@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 .setIndicatorColor(0xFFFF0000)
                 .setNomalColor(0xFF000000)
                 .setSelectedColor(0xFFFF0000)
-                .setTitle("设置你要的标题")
+                .setTitle("设置你的标题")
                 .setTabVisible(false)
                 .setLevel(Integer.valueOf(etLevel.getText().toString()))
                 .setTabText("选择")

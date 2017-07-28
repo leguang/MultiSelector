@@ -38,8 +38,8 @@ public class MultiSelectorView extends LinearLayout {
     private CharSequence DEFAULT_TEXT = "请选择";
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private OnItemClickListener mOnItemClickListener;
-    private OnSelectedListener mOnSelectedListener;
+    private MultiSelectorInterface.OnItemClickListener mOnItemClickListener;
+    private MultiSelectorInterface.OnSelectedListener mOnSelectedListener;
     private List<PagerHolder> mPagerHolders = new ArrayList<>();
     private VPAdapter pagerAdapter;
     private int mMode;
@@ -94,6 +94,13 @@ public class MultiSelectorView extends LinearLayout {
         initViewPager();
     }
 
+    /**
+     * Set the color of tab using the given color on nomal and selected state.
+     *
+     * @param normalColor   nomal state.
+     * @param selectedColor selected state.
+     * @return This MultiSelectorView object to allow for chaining of calls to set methods.
+     */
     public MultiSelectorView setTabTextColors(int normalColor, int selectedColor) {
         if (mTabLayout != null) {
             mTabLayout.setTabTextColors(normalColor, selectedColor);
@@ -101,13 +108,25 @@ public class MultiSelectorView extends LinearLayout {
         return this;
     }
 
-    public MultiSelectorView setIndicatorColor(@ColorInt int color) {
+    /**
+     * Set the tab indicator's color for the currently selected tab.
+     *
+     * @param colorId color to use for the indicator
+     * @return This MultiSelectorView object to allow for chaining of calls to set methods.
+     */
+    public MultiSelectorView setIndicatorColor(@ColorInt int colorId) {
         if (mTabLayout != null) {
-            mTabLayout.setSelectedTabIndicatorColor(mIndicatorColor = color);
+            mTabLayout.setSelectedTabIndicatorColor(mIndicatorColor = colorId);
         }
         return this;
     }
 
+    /**
+     * Set the mode of the tab like the {@link TabLayout}.
+     *
+     * @param mode one of {@link TabLayout.MODE_FIXED} or {@link TabLayout.MODE_SCROLLABLE}.
+     * @return This MultiSelectorView object to allow for chaining of calls to set methods.
+     */
     public MultiSelectorView setTabMode(@Mode int mode) {
         if (mTabLayout != null) {
             mTabLayout.setTabMode(mMode = mode);
@@ -115,6 +134,11 @@ public class MultiSelectorView extends LinearLayout {
         return this;
     }
 
+    /**
+     * Set the steps of the selector.
+     *
+     * @return This MultiSelectorView object to allow for chaining of calls to set methods.
+     */
     public MultiSelectorView setLevel(int level) {
         this.level = level;
         mViewPager.setOffscreenPageLimit(level);
@@ -125,6 +149,11 @@ public class MultiSelectorView extends LinearLayout {
         return level;
     }
 
+    /**
+     * Set the tips of the tab.
+     *
+     * @return This MultiSelectorView object to allow for chaining of calls to set methods.
+     */
     public MultiSelectorView setTabText(CharSequence text) {
         this.DEFAULT_TEXT = text;
         mPagerHolders.get(mPagerHolders.size() - 1).option = text;
@@ -132,12 +161,22 @@ public class MultiSelectorView extends LinearLayout {
         return this;
     }
 
+    /**
+     * Set the visible of the tab.
+     *
+     * @param tabVisible true is visible,false is gone.
+     * @return This MultiSelectorView object to allow for chaining of calls to set methods.
+     */
     public MultiSelectorView setTabVisible(boolean tabVisible) {
         this.tabVisible = tabVisible;
         mTabLayout.setVisibility(tabVisible ? VISIBLE : GONE);
         return this;
     }
 
+    /**
+     * Notify any registered observers that the data set has changed like {@link RecyclerView}.
+     * @param date show in the RecyclerView.
+     */
     public void notifyDataSetChanged(List<String> date) {
         PagerHolder pagerHolder = mPagerHolders.get(pagerAdapter.getCount() - 1);
         if (pagerHolder != null && pagerHolder.recyclerView != null) {
@@ -181,12 +220,24 @@ public class MultiSelectorView extends LinearLayout {
         });
     }
 
-    public MultiSelectorView setOnItemClickListener(@Nullable OnItemClickListener listener) {
+    /**
+     * Set a listener to be invoked when the item in the list is pressed.
+     *
+     * @param listener The {@link MultiSelectorInterface.OnItemClickListener} to use.
+     * @return This MultiSelectorView object to allow for chaining of calls to set methods
+     */
+    public MultiSelectorView setOnItemClickListener(@Nullable MultiSelectorInterface.OnItemClickListener listener) {
         mOnItemClickListener = listener;
         return this;
     }
 
-    public MultiSelectorView setOnSelectedListener(@Nullable OnSelectedListener listener) {
+    /**
+     * Set a listener to be invoked when the last item in the list is pressed.
+     *
+     * @param listener The {@link MultiSelectorInterface.OnSelectedListener} to use.
+     * @return This MultiSelectorView object to allow for chaining of calls to set methods
+     */
+    public MultiSelectorView setOnSelectedListener(@Nullable MultiSelectorInterface.OnSelectedListener listener) {
         mOnSelectedListener = listener;
         return this;
     }
@@ -285,14 +336,6 @@ public class MultiSelectorView extends LinearLayout {
             }
             return 0;
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(int pagerPosition, int optionPosition, CharSequence option);
-    }
-
-    public interface OnSelectedListener {
-        void onSelect(List<CharSequence> select);
     }
 
     class BaseViewHolder extends RecyclerView.ViewHolder {

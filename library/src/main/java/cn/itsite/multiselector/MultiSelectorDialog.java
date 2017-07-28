@@ -9,13 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.design.widget.TabLayout;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -70,69 +70,136 @@ public class MultiSelectorDialog extends Dialog {
         private int level = 1;
         private CharSequence tabText = "请选择";
         private boolean tabVisible;
-        private MultiSelectorView.OnItemClickListener mOnItemClickListener;
-        private MultiSelectorView.OnSelectedListener mOnSelectedListener;
+        private MultiSelectorInterface.OnItemClickListener mOnItemClickListener;
+        private MultiSelectorInterface.OnSelectedListener mOnSelectedListener;
 
         public Builder(@NonNull Context context) {
             this.context = context;
         }
 
+        /**
+         * Set the title displayed in the {@link Dialog}.
+         *
+         * @param title CharSequence.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setTitle(@Nullable CharSequence title) {
             this.title = title;
             return this;
         }
 
+        /**
+         * Set the title using the given resource id.
+         *
+         * @param textId resource id.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setTitle(@StringRes int textId) {
             this.title = context.getText(textId);
             return this;
         }
 
+        /**
+         * Set the color of title using the given resource id.
+         *
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setTitleColor(@ColorInt int color) {
             this.titleColor = color;
             return this;
         }
 
+        /**
+         * Set the color of item and indicator using the given color on nomal state.
+         *
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setNomalColor(@ColorInt int color) {
             this.nomalColor = color;
             return this;
         }
 
+        /**
+         * Set the color of item and indicator using the given color on selected state.
+         *
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setSelectedColor(@ColorInt int color) {
             this.selectedColor = color;
             return this;
         }
 
+        /**
+         * Set the mode of the tab like the {@link TabLayout}.
+         *
+         * @param mode one of {@link TabLayout.MODE_FIXED} or {@link TabLayout.MODE_SCROLLABLE}.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setTabMode(@TabLayout.Mode int mode) {
             this.mode = mode;
             return this;
         }
 
+        /**
+         * Set the tab indicator's color for the currently selected tab.
+         *
+         * @param colorId color to use for the indicator
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setIndicatorColor(int colorId) {
             this.indicatorColor = colorId;
             return this;
         }
 
+        /**
+         * Set the steps of the selector.
+         *
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setLevel(int level) {
             this.level = level;
             return this;
         }
 
+        /**
+         * Set the tips of the tab.
+         *
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setTabText(CharSequence text) {
             this.tabText = text;
             return this;
         }
 
+        /**
+         * Set the visible of the tab.
+         *
+         * @param tabVisible true is visible,false is gone.
+         * @return This Builder object to allow for chaining of calls to set methods.
+         */
         public Builder setTabVisible(boolean tabVisible) {
             this.tabVisible = tabVisible;
             return this;
         }
 
-        public Builder setOnItemClickListener(@Nullable MultiSelectorView.OnItemClickListener listener) {
+        /**
+         * Set a listener to be invoked when the item in the list is pressed.
+         *
+         * @param listener The {@link MultiSelectorInterface.OnItemClickListener} to use.
+         * @return This Builder object to allow for chaining of calls to set methods
+         */
+        public Builder setOnItemClickListener(@Nullable MultiSelectorInterface.OnItemClickListener listener) {
             this.mOnItemClickListener = listener;
             return this;
         }
 
-        public Builder setOnSelectedListener(@Nullable MultiSelectorView.OnSelectedListener listener) {
+        /**
+         * Set a listener to be invoked when the last item in the list is pressed.
+         *
+         * @param listener The {@link MultiSelectorInterface.OnSelectedListener} to use.
+         * @return This Builder object to allow for chaining of calls to set methods
+         */
+        public Builder setOnSelectedListener(@Nullable MultiSelectorInterface.OnSelectedListener listener) {
             this.mOnSelectedListener = listener;
             return this;
         }
@@ -142,7 +209,7 @@ public class MultiSelectorDialog extends Dialog {
             View view = LayoutInflater.from(context).inflate(R.layout.dialog_selector, null);
 
             //初始化Title部分。
-            AppCompatTextView tvTitle = (AppCompatTextView) view.findViewById(R.id.tv_title);
+            TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
             tvTitle.setText(title);
             tvTitle.setTextColor(titleColor);
 
