@@ -68,6 +68,7 @@ public class MultiSelectorDialog extends Dialog {
         private int selectedColor = 0xFFFF0000;
         private int indicatorColor = 0xFFFF0000;
         private int level = 1;
+        private CharSequence tabText = "请选择";
         private MultiSelectorView.OnItemClickListener mOnItemClickListener;
         private MultiSelectorView.OnSelectedListener mOnSelectedListener;
 
@@ -115,6 +116,11 @@ public class MultiSelectorDialog extends Dialog {
             return this;
         }
 
+        public Builder setTabText(CharSequence text) {
+            this.tabText = text;
+            return this;
+        }
+
         public Builder setOnItemClickListener(@Nullable MultiSelectorView.OnItemClickListener listener) {
             this.mOnItemClickListener = listener;
             return this;
@@ -146,6 +152,7 @@ public class MultiSelectorDialog extends Dialog {
             //初始化级联View
             MultiSelectorView multiSelectorView = (MultiSelectorView) view.findViewById(R.id.multiSelectorView);
             multiSelectorView.setLevel(level)
+                    .setTabText(tabText)
                     .setTabTextColors(nomalColor, selectedColor)
                     .setTabMode(mode)
                     .setIndicatorColor(indicatorColor)

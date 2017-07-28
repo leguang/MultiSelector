@@ -28,6 +28,7 @@
         app:indicatorColor="#FFFF0000"
         app:mode="scrollable"
         app:nomalColor="#FF222222"
-        app:selectedColor="#FFFF0000" />
+        app:selectedColor="#FFFF0000"
+        app:tabText="我的" />
 
 </LinearLayout>

@@ -9,5 +9,7 @@
         <attr name="selectedColor" format="color" />
         <attr name="indicatorColor" format="color" />
         <attr name="tabVisible" format="boolean" />
+        <attr name="level" format="integer" />
+        <attr name="tabText" format="string" />
     </declare-styleable>
 </resources>

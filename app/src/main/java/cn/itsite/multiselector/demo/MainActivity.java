@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 .setSelectedColor(0xFFFF0000)
                 .setTitle("请选择地区")
                 .setLevel(3)
+                .setTabText("我的我的")
                 .setOnItemClickListener(new MultiSelectorView.OnItemClickListener() {
                     @Override
                     public void onItemClick(int currentPager, int selectedItem, CharSequence item) {

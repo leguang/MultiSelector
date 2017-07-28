@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.socks.library.KLog;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -77,7 +79,9 @@ public class MultiSelectorView extends LinearLayout {
                 mIndicatorColor = a.getColor(R.styleable.MultiSelector_indicatorColor, 0xFFFF0000);
             }
             tabVisible = a.getBoolean(R.styleable.MultiSelector_tabVisible, true);
+            level = a.getInt(R.styleable.MultiSelector_level, 1);
             mMode = a.getInt(R.styleable.MultiSelector_mode, TabLayout.MODE_FIXED);
+            DEFAULT_TEXT = a.getString(R.styleable.MultiSelector_tabText);
             inflate(context, R.layout.view_selector, this);
 
         } finally {
@@ -125,6 +129,8 @@ public class MultiSelectorView extends LinearLayout {
 
     public MultiSelectorView setTabText(CharSequence text) {
         this.DEFAULT_TEXT = text;
+        mPagerHolders.get(mPagerHolders.size() - 1).option = text;
+        pagerAdapter.notifyDataSetChanged();
         return this;
     }
 
@@ -301,8 +307,10 @@ public class MultiSelectorView extends LinearLayout {
         RecyclerView recyclerView;
         CharSequence option = DEFAULT_TEXT;
 
+
         public PagerHolder(int position) {
             this.position = position;
+            KLog.e("option-->" + option);
         }
     }
 }
