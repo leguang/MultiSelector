@@ -1,5 +1,6 @@
 package cn.itsite.multiselector.demo;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -71,15 +72,14 @@ public class MainActivity extends AppCompatActivity {
                 .setOnItemClickListener(new MultiSelectorView.OnItemClickListener() {
                     @Override
                     public void onItemClick(final int pagerPosition, int optionPosition, CharSequence option) {
-                        Toast.makeText(MainActivity.this
-                                , "pagerPosition-->" + pagerPosition + "\r\noptionPosition-->" + optionPosition + "\r\noption-->" + option
-                                , Toast.LENGTH_SHORT).show();
+                        ToastUtils.showToast(MainActivity.this
+                                , "pagerPosition-->" + pagerPosition + "\r\noptionPosition-->" + optionPosition + "\r\noption-->" + option);
+
                         //模拟网络延迟。
                         multiSelectorView.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 dialog.notifyDataSetChanged(getData(pagerPosition + 1));
-
                             }
                         }, 1000);
                     }
@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
                         for (CharSequence s : select) {
                             Log.e(TAG, s.toString());
                         }
-
                     }
                 }).show();
 
@@ -109,16 +108,14 @@ public class MainActivity extends AppCompatActivity {
         multiSelectorView.setOnItemClickListener(new MultiSelectorView.OnItemClickListener() {
             @Override
             public void onItemClick(final int pagerPosition, int optionPosition, CharSequence option) {
-                Toast.makeText(MainActivity.this
-                        , "pagerPosition-->" + pagerPosition + "\r\noptionPosition-->" + optionPosition + "\r\noption-->" + option
-                        , Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast(MainActivity.this
+                        , "pagerPosition-->" + pagerPosition + "\r\noptionPosition-->" + optionPosition + "\r\noption-->" + option);
 
                 //模拟网络延迟。
                 multiSelectorView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         multiSelectorView.notifyDataSetChanged(getData(pagerPosition + 1));
-
                     }
                 }, 1000);
 
@@ -130,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 for (CharSequence s : select) {
                     Log.e(TAG, s.toString());
                 }
-
             }
         });
     }
@@ -147,5 +143,17 @@ public class MainActivity extends AppCompatActivity {
             list.add("第" + currentPager + "页" + "第" + i + "个");
         }
         return list;
+    }
+
+    public static class ToastUtils {
+        public static Toast mToast;
+
+        public static void showToast(Context mContext, String msg) {
+            if (mToast == null) {
+                mToast = Toast.makeText(mContext, "", Toast.LENGTH_SHORT);
+            }
+            mToast.setText(msg);
+            mToast.show();
+        }
     }
 }
