@@ -47,8 +47,15 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.bt_dialog).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initDialog();
+//                initDialog();
                 dialog.show();
+                multiSelectorView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.notifyDataSetChanged(getData(0));
+                    }
+                });
+
             }
         });
     }
@@ -63,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 .setIndicatorColor(0xFFFF0000)
                 .setNomalColor(0xFF000000)
                 .setSelectedColor(0xFFFF0000)
-                .setTitle("设置你的标题")
                 .setTabVisible(true)
                 .setLevel(Integer.valueOf(etLevel.getText().toString()))
                 .setTabText("选择")
@@ -90,16 +96,15 @@ public class MainActivity extends AppCompatActivity {
                             Log.e(TAG, s.toString());
                         }
                     }
-                }).show();
+                }).build();
 
         //模拟网络延迟。
-        multiSelectorView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.notifyDataSetChanged(getData(0));
-
-            }
-        }, 1000);
+//        multiSelectorView.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                dialog.notifyDataSetChanged(getData(0));
+//            }
+//        }, 1000);
     }
 
     private void initListener() {

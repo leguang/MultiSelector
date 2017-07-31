@@ -9,11 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
 import android.support.design.widget.TabLayout;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -208,7 +210,11 @@ public class MultiSelectorDialog extends Dialog {
             final MultiSelectorDialog dialog = new MultiSelectorDialog(context);
             View view = LayoutInflater.from(context).inflate(R.layout.dialog_selector, null);
 
-            //init Title.
+            //init title container.
+            FrameLayout flcontainer = (FrameLayout) view.findViewById(R.id.fl_container);
+            flcontainer.setVisibility(TextUtils.isEmpty(title) ? View.GONE : View.VISIBLE);
+
+            //set title
             TextView tvTitle = (TextView) view.findViewById(R.id.tv_title);
             tvTitle.setText(title);
             tvTitle.setTextColor(titleColor);
@@ -249,9 +255,10 @@ public class MultiSelectorDialog extends Dialog {
         return new Builder(context);
     }
 
-    public void notifyDataSetChanged(List<String> date) {
+    public MultiSelectorDialog notifyDataSetChanged(List<String> date) {
         if (mMultiSelectorView != null) {
             mMultiSelectorView.notifyDataSetChanged(date);
         }
+        return this;
     }
 }
