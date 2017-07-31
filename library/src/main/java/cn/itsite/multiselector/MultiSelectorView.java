@@ -294,7 +294,8 @@ public class MultiSelectorView extends LinearLayout {
 
         @Override
         public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new BaseViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_selector, parent, false));
+            return new BaseViewHolder(LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_rv_selector, parent, false));
         }
 
         @Override
