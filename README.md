@@ -1,13 +1,12 @@
 # MultiSelector
 
-[![Release](https://jitpack.io/v/leguang/StateManager.svg)](https://jitpack.io/#leguang/StateManager)
+[![Release](https://jitpack.io/v/leguang/MultiSelector.svg)](https://jitpack.io/#leguang/MultiSelector)
 
-StateManager是一个页面状态管理工具，可以让开发者方便而又灵活地切换界面的状态。（欢迎Star一下）
-## 能做什么？([下载 apk](https://github.com/leguang/StateManager/blob/master/app-debug.apk))
-- **不必在XML中配置Layout即可给任何界面添加状态，不论是Activity或者是Fragment亦或者View**
-- **默认提供空数据状态，异常状态，网络异常状态，Loading状态**
+仿京东的地址选择器，只是多了一个每一级的滑动切换效果，使用TabLayout+ViewPager实现。
+## 能做什么？([下载 apk](https://github.com/leguang/MultiSelector/blob/master/app-debug.apk))
+- **提供自定View和Dialog的两种形式**
+- **可配置级联数**
 - **简洁的API，简单的配置**
-- **也可以在XML中配置使用**
 
 ## 如何使用它？
 
@@ -24,123 +23,94 @@ StateManager是一个页面状态管理工具，可以让开发者方便而又�
 2. 然后在App目录下的dependencies添加:
 ```
 	dependencies {
-	         //页面状态管理
-   		 compile 'com.github.leguang:StateManager:1.0.1'
+	     //多级选择器
+   		 compile 'com.github.leguang:MultiSelector:1.4'
 	}
 ```
 此时同步一下，即已完成引入。
 
 3. 代码中简单使用：
 
+自定义View的使用如下：首先在XML文件中配置
 ```
-//首先配置一下：
- StateManager mStateManager = StateManager.builder(this)//通过Build模式构建。
-                .setContent(textView)//为哪部分内容添加状态管理。这里可以是Activity，Fragment或任何View。
-                .setLoadingView(R.layout.state_loading)//设置Loading的布局样式。
-                .setLoadingText("加载我只服你…")//当然要想这个文字起作用，布局中的TextView的id必须为tv_loading_state。
-                .setEmptyView(R.layout.state_empty)//设置空数据的布局样式。
-                .setEmptyImage(R.drawable.ic_empty_state_200px)//当然要想设置图片起作用，ImageView的id必须为iv_empty_state。
-                .setEmptyText("大爷，实在是没有数据了")//当然要想这个文字起作用，布局中的TextView的id必须为tv_empty_state。
-                .setEmptyOnClickListener(new StateListener.OnClickListener() {//设置点击事件。
+ <cn.itsite.multiselector.MultiSelectorView
+        android:id="@+id/multiSelectorView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:indicatorColor="@color/colorAccent"
+        app:level="3"
+        app:mode="scrollable"
+        app:nomalColor="@color/base_black"
+        app:selectedColor="@color/colorAccent"
+        app:tabText="选择" />
+```
+在代码中使用：
+```
+multiSelectorView.setOnItemClickListener(new MultiSelectorInterface.OnItemClickListener() {
+            @Override
+            public void onItemClick(final int pagerPosition, int optionPosition, CharSequence option) {
+                ToastUtils.showToast(MainActivity.this
+                        , "pagerPosition-->" + pagerPosition + "\r\noptionPosition-->" + optionPosition + "\r\noption-->" + option);
+
+                //模拟网络延迟。
+                multiSelectorView.postDelayed(new Runnable() {
                     @Override
-                    public void onClick(View view) {
-                        showToast("空状态");
+                    public void run() {
+                        multiSelectorView.notifyDataSetChanged(getData(pagerPosition + 1));
                     }
-                })
-                .setErrorView(R.layout.state_error)//设置异常状态的布局样式。
-                .setErrorImage(R.drawable.ic_empty_state_200px)//当然要想设置图片起作用，ImageView的id必须为iv_error_state。
-                .setErrorText("大爷，出错了")//当然要想这个文字起作用，布局中的TextView的id必须为tv_error_state。
-                .setErrorOnClickListener(new StateListener.OnClickListener() {//设置点击事件。
-                    @Override
-                    public void onClick(View view) {
-                        showToast("错误状态");
-                    }
-                })
-                .setNetErrorView(R.layout.state_net_error)//设置网络异常状态的布局样式。
-                .setNetErrorImage(R.drawable.ic_empty_state_200px)//当然要想设置图片起作用，ImageView的id必须为iv_net_error_state。
-                .setNetErrorText("大爷，有人拔网线了")//当然要想这个文字起作用，布局中的TextView的id必须为tv_net_error_state。
-                .setNetErrorOnClickListener(new StateListener.OnClickListener() {//设置点击事件。
-                    @Override
-                    public void onClick(View view) {
-                        showToast("谁拔了我的网线");
-                    }
-                })
-                .build();
- 
-//在需要用到的地方切换状态。
+                }, 1000);
 
-mStateManager.showLoading();//切换到Loading状态
-
-mStateManager.showEmpty();//切换到空数据状态
-
-mStateManager.showError();//切换到异常状态
-
-mStateManager.showNetError();//切换到网络异常状态
-
-mStateManager.showContent();//切换到默认状态
-
+            }
+        }).setOnSelectedListener(new MultiSelectorInterface.OnSelectedListener() {
+            @Override
+            public void onSelect(List<CharSequence> select) {
+                dialog.dismiss();
+                for (CharSequence s : select) {
+                    Log.e(TAG, s.toString());
+                }
+            }
+        });
 ```
 
-## 高级用法：
-你也可以自己定制状态页面样式
-
+在对话框中使用：
 ```
-mStateManager = StateManager.builder(this)
-                .setContent(recyclerView)
-                .setEmptyView(R.layout.state_custom_empty)
-                .setErrorView(R.layout.state_custom_error)
-                .setLoadingView(R.layout.state_custom_loading)
-                .setConvertListener(new StateListener.ConvertListener() {
+ dialog = MultiSelectorDialog.builder(MainActivity.this)
+                .setIndicatorColor(0xFFFF0000)
+                .setNomalColor(0xFF000000)
+                .setSelectedColor(0xFFFF0000)
+                .setTabVisible(true)
+                .setLevel(Integer.valueOf(etLevel.getText().toString()))
+                .setTabText("选择")
+                .setOnItemClickListener(new MultiSelectorInterface.OnItemClickListener() {
                     @Override
-                    public void convert(BaseViewHolder holder, StateLayout stateLayout) {
-                        holder.setOnClickListener(R.id.bt0, new View.OnClickListener() {
+                    public void onItemClick(final int pagerPosition, int optionPosition, CharSequence option) {
+                        ToastUtils.showToast(MainActivity.this
+                                , "pagerPosition-->" + pagerPosition + "\r\noptionPosition-->" + optionPosition + "\r\noption-->" + option);
+
+                        //模拟网络延迟。
+                        multiSelectorView.postDelayed(new Runnable() {
                             @Override
-                            public void onClick(View view) {
-                                ToastUtils.showToast(RecyclerView.this, "点击了正中间");
+                            public void run() {
+                                dialog.notifyDataSetChanged(getData(pagerPosition + 1));
                             }
-                        }).setOnClickListener(R.id.bt1, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ToastUtils.showToast(RecyclerView.this, "点击了左上角");
-                            }
-                        }).setOnClickListener(R.id.bt2, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ToastUtils.showToast(RecyclerView.this, "点击了右上角");
-                            }
-                        }).setOnClickListener(R.id.bt3, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ToastUtils.showToast(RecyclerView.this, "点击了左下角");
-                            }
-                        }).setOnClickListener(R.id.bt4, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ToastUtils.showToast(RecyclerView.this, "点击了右上角");
-                            }
-                        }).setOnClickListener(R.id.tv_error, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ToastUtils.showToast(RecyclerView.this, "出错了");
-                            }
-                        }).setOnClickListener(R.id.tv_loading, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                ToastUtils.showToast(RecyclerView.this, "刷新");
-                            }
-                        });
+                        }, 1000);
                     }
                 })
-                .build();
+                .setOnSelectedListener(new MultiSelectorInterface.OnSelectedListener() {
+                    @Override
+                    public void onSelect(List<CharSequence> select) {
+                        dialog.dismiss();
+                        for (CharSequence s : select) {
+                            Log.e(TAG, s.toString());
+                        }
+                    }
+                }).build();
 ```
 
 >**持续更新!，欢迎Issues+Star项目**
 
 ## 感谢
-[hongyangAndroid/LoadingAndRetryManager](https://github.com/hongyangAndroid/LoadingAndRetryManager)
-
-[CymChad/BaseRecyclerViewAdapterHelper](https://github.com/CymChad/BaseRecyclerViewAdapterHelper)
-
+感谢京东给出这么优秀的交互
 
 ## License
 
