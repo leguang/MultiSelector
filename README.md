@@ -110,7 +110,7 @@ multiSelectorView.setOnItemClickListener(new MultiSelectorInterface.OnItemClickL
 >**持续更新!，欢迎Issues+Star项目**
 
 ## 感谢
-感谢京东给出这么优秀的交互
+感谢京东给出这么优秀的交互^_^
 
 ## License
 
