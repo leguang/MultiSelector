@@ -46,7 +46,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="show in view" />
+            android:text="show in view"
+            android:textAllCaps="false" />
 
 
         <Button
@@ -54,7 +55,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="show in dialog" />
+            android:text="show in dialog"
+            android:textAllCaps="false" />
     </LinearLayout>
 
 
